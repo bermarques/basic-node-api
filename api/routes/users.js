@@ -1,5 +1,5 @@
 module.exports = app => {
-    const controller = require('../controllers/users')();
+    const controller = app.controllers.users
 
     app.route('/users/')
     .get(controller.listUsers)
