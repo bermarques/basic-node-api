@@ -4,4 +4,7 @@ module.exports = app => {
     app.route('/users/')
     .get(controller.listUsers)
     .post(controller.saveUsers)
+
+    app.route('/users/:userId')
+    .delete(controller.removeUsers)
 }
