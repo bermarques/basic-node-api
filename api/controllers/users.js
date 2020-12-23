@@ -19,31 +19,69 @@ module.exports = (app) => {
       works: req.body.works,
       title: req.body.works.title,
       description: req.body.works.description,
-      deploy_urL: req.body.works.deploy_urL
+      deploy_urL: req.body.works.deploy_urL,
     });
     res.status(201).json(usersMock);
   };
 
   controller.removeUsers = (req, res) => {
-    const {userId} = req.params
+    const { userId } = req.params;
 
-    const foundUserIndex = usersMock.data.findIndex(user => user.id === userId)
+    const foundUserIndex = usersMock.data.findIndex(
+      (user) => user.id === userId
+    );
 
     if (foundUserIndex === -1) {
       res.status(404).json({
-        message: 'Usuário não encontrado.',
+        message: "Usuário não encontrado.",
         success: false,
-        users: usersMock
-      })
+        users: usersMock,
+      });
     } else {
-      usersMock.data.splice(foundUserIndex, 1)
+      usersMock.data.splice(foundUserIndex, 1);
       res.status(200).json({
-        message: 'Usuário deletado com sucesso',
+        message: "Usuário deletado com sucesso",
         success: true,
-        users: usersMock
-      })
+        users: usersMock,
+      });
     }
-  }
+  };
+
+  controller.updateUsers = (req, res) => {
+    const { userId } = req.params;
+
+    const foundUserIndex = usersMock.data.findIndex(
+      (user) => user.id === userId
+    );
+
+    if (foundUserIndex === -1) {
+      res.status(400).json({
+        message: "Usuário não encontrado",
+        success: false,
+        users: usersMock,
+      });
+    } else {
+      const newUser = {
+        id: userId,
+        name: req.body.name,
+        email: req.body.email,
+        bio: req.body.bio,
+        contact: req.body.contact,
+
+        works: req.body.works,
+        title: req.body.works.title,
+        description: req.body.works.description,
+        deploy_urL: req.body.works.deploy_urL,
+      };
+      usersMock.data.splice(foundUserIndex, 1, newUser);
+
+      res.status(200).json({
+        message: "Usuário atualizado com sucesso",
+        success: true,
+        users: usersMock,
+      });
+    }
+  };
 
   return controller;
 };

@@ -7,4 +7,5 @@ module.exports = app => {
 
     app.route('/users/:userId')
     .delete(controller.removeUsers)
+    .put(controller.updateUsers)
 }
